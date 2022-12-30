@@ -5,8 +5,8 @@
   "max_responses": 5
 },
 "files":[
-  "res/1.txt",
-  "res/2.txt",
-  "res/3.txt"
+  "1.txt",
+  "2.txt",
+  "3.txt"
 ]
 }

@@ -6,6 +6,7 @@
 #include <fstream>
 #include <map>
 #include <streambuf>
+#include <cassert>
 
 #include "json.hpp"
 
@@ -13,13 +14,18 @@ class ConvertJSON {
 public:
 ConvertJSON() = default;
  
-void GetTextDocuments();
-void GetResponsesLimit();
-void GetRequests();
-void putAnswers();
+bool GetTextDocuments();
+bool GetResponsesLimit();
+bool GetRequests();
+bool PutAnswers();
 
+void TestGetTextDocuments();
+void TestGetResponsesLimit();
+void TestGetRequests();
+void TestPutAnswers();
+  
 private:
   int responsesLimit;
-  std::vector<std::string> requests, textDocuments;
+  std::vector<std::string> requests, words;
   std::vector<int> resultsChecks;
 };

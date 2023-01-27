@@ -127,7 +127,7 @@ bool ConvertJSON::PutAnswers() {
 	  equalWords.push_back(protoAnswers[j].docid);	
       answers["answers"]["request" + std::to_string(requestsID[i])]["result"] = true;
       for (auto j : equalWords) {      
-	answers["answers"]["request" + std::to_string(requestsID[i])]["relevanse"]["docid"] = equalWords[j];
+	answers["answers"]["request" + std::to_string(requestsID[i])]["relevance"]["docid"] = equalWords[j];
       }
       equalWords.clear();
     }

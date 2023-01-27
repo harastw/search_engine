@@ -20,7 +20,7 @@ void ConvertJSON::LoadUnique() {
   
   for(int i = 0; i < allWords.size(); i++)
     for (int j = 0; j < allWords[i].data.size(); j++)
-      std::cout << "i = " << i << "; j = " << j << "; word - " << allWords[i].data[j].data
+      std::cout << "docid = " << i << "; wordid = " << j << "; word - " << allWords[i].data[j].data
 		<< " with " << allWords[i].data[j].entry << " entry" << "; unique - "
 		<< allWords[i].data[j].isUniqueAcrossFiles << std::endl;
 }
@@ -48,8 +48,8 @@ bool ConvertJSON::GetTextDocuments() {
     for (int j = 0; j < newFileWords.data.size(); j++) {
       for (int k = 0; k < j; k++) {
 	if (newFileWords.data[k].data == newFileWords.data[j].data) {
-	  newFileWords.data.erase(newFileWords.data.begin()+k);     
 	  newFileWords.data[j].entry++;
+	  newFileWords.data.erase(newFileWords.data.begin()+k);     	  
 	}
       }
     }
@@ -93,7 +93,7 @@ bool ConvertJSON::PutAnswers() {
   std::vector<Word> protoAnswers;
   std::vector<int> requestsID;
   std::ofstream fileAnswers("myAnswers.json");
-  std::vector<std::string> equalWords;
+  std::vector<int> equalWords;
   bool check;
   for (auto i = 0; i < requests.size(); i++) {
     check = false;
@@ -109,21 +109,27 @@ bool ConvertJSON::PutAnswers() {
     if (!check)
       answers["answers"]["request" + std::to_string(i)]["result"] = false;
   }
+
+  std::cout << "protoanswers:" << std::endl;
+  for (auto el : protoAnswers)
+    std::cout << el.data << std::endl;
+  std::cout << std::endl;
+  
   for (auto i = 0; i < protoAnswers.size(); i++) {
     if (protoAnswers[i].isUniqueAcrossFiles) {
       answers["answers"]["request" + std::to_string(requestsID[i])]["result"] = true;
       answers["answers"]["request" + std::to_string(requestsID[i])]["docid"] = protoAnswers[i].docid;
     }
     else {
-      equalWords.push_back(protoAnswers[i].data);
+      equalWords.push_back(protoAnswers[i].docid);
       for (auto j = i + 1; j < protoAnswers.size(); j++) {
 	if (protoAnswers[i].data == protoAnswers[j].data) {
-	  equalWords.push_back(protoAnswers[j].data);
+	  equalWords.push_back(protoAnswers[j].docid);
 	}
       }
-      answers["answers"]["request" + std::to_string(i)]["result"] = true;
+      answers["answers"]["request" + std::to_string(requestsID[i])]["result"] = true;
       for (auto j : equalWords) {
-	answers["answers"]["request" + std::to_string(i)]["relevanse"]["docid"] = protoAnswers[i].docid;
+	answers["answers"]["request" + std::to_string(requestsID[i])]["relevanse"]["docid"] = equalWords[j];
       }
       equalWords.clear();
     }

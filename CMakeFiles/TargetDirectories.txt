@@ -1,0 +1,3 @@
+/home/sark/code/search_engine/CMakeFiles/main.dir
+/home/sark/code/search_engine/CMakeFiles/edit_cache.dir
+/home/sark/code/search_engine/CMakeFiles/rebuild_cache.dir

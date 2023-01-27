@@ -11,6 +11,6 @@
 
 struct Word {
   std::string data;
-  int entry = 0;
+  int entry = 0, docid;
   bool isUniqueAcrossFiles = true;
 };

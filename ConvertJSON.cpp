@@ -1,7 +1,5 @@
 #include "ConvertJSON.hpp"
-
 using json = nlohmann::json;
-
 void ConvertJSON::LoadUnique() {
   std::vector<std::string> fullUniqueWords;
   if (allWords.size() != 0)
@@ -127,13 +125,13 @@ bool ConvertJSON::PutAnswers() {
 	  equalWords.push_back(protoAnswers[j].docid);	
       answers["answers"]["request" + std::to_string(requestsID[i])]["result"] = true;
       for (auto j : equalWords) {      
-	answers["answers"]["request" + std::to_string(requestsID[i])]["relevance"]["docid"] = equalWords[j];
+	answers["answers"]["request" + std::to_string(requestsID[i])]["relevance"]["docid"] = j;
       }
       equalWords.clear();
     }
   }	    
   
-  std::cout << answers;
+  std::cout << answers << std::endl;
   fileAnswers << answers;
   fileAnswers.close();
   if (!fileAnswers.is_open())

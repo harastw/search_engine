@@ -7,7 +7,7 @@
 #include <map>
 #include <cassert>
 
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 
 struct Word {
   std::string data;

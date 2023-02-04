@@ -45,7 +45,7 @@ bool ConvertJSON::GetTextDocuments() {
     newFileWords.data.pop_back();
     for (int j = 0; j < newFileWords.data.size(); j++) {
       for (int k = 0; k < j; k++) {
-	if (newFileWords.data[k].data == newFileWords.data[j].data) {
+        if (newFileWords.data[k].data == newFileWords.data[j].data) {
 	  newFileWords.data[j].entry++;
 	  newFileWords.data.erase(newFileWords.data.begin()+k);     	  
 	}

@@ -2,43 +2,7 @@
 
 using json = nlohmann::json;
 
-void ConvertJSON::CheckWordsInDoc(int docid) {
-  Entry entry;
-  entry.first = docid;
-  entry.second = 0;
-  std::vector<Entry> newEntryVector;
-  newEntryVector.push_back(entry);
-  for (int i = 0; i < allWords[docid].size(); i++) {
-    std::string currentWord = allWords[docid][i];
-    uniqueWords[currentWord] = newEntryVector; // new unique word
-    for (int j = i; j < allWords[docid].size(); j++) {
-      if (allWords[docid][j] == allWords[docid][i] && i != j) {
-	allWords[docid].erase(allWords[docid].begin() + j);// delete current word
-	uniqueWords[currentWord][0].second++;
-	j--;
-      }
-    }
-  }
-}
-
-bool ConvertJSON::InvertedIndex() {
-  for (int i = 0; i < allWords.size(); i++) { // docs   
-    CheckWordsInDoc(i);
-  }
-  std::map<std::string, std::vector<Entry>>::iterator it;
-  for (int i = 0; i < uniqueWords.size(); i++) {
-    for (int j = i; j < uniqueWords.size(); j++) {
-      if (uniqueWords[i]->first == uniqueWords[j]->first) {
-	uniqueWords[i]->second.push_back(uniqueWords[j]->second[0]);
-	uniqueWords.erase(uniqueWords.begin() + j);
-	j--;
-      }
-    }
-  }
-  return true;
-}
-
-bool ConvertJSON::GetTextDocuments() { // start
+bool ConvertJSON::GetTextDocuments() {
   std::ifstream configFile("config.json");
   std::string newWord;
   std::vector<std::string> wordsFromCurrentFile;
@@ -51,27 +15,85 @@ bool ConvertJSON::GetTextDocuments() { // start
   for (auto i = 0; i < totalFiles; i++) {
     std::string nameOfCurrentFile = config["files"][i];
     fromFileToString.open(nameOfCurrentFile); // open current file
-    while(!fromFileToString.eof()) {
-      fromFileToString >> newWord;
-      wordsFromCurrentFile.push_back(newWord);
-      newWord.clear();
+    if (fromFileToString.is_open()) {
+      while(!fromFileToString.eof()) {
+	fromFileToString >> newWord;
+	if (newWord != "" && newWord != " ")
+	  wordsFromCurrentFile.push_back(newWord);
+	newWord.clear();
+      }
+      fromFileToString.close();
+    } else {
+      std::cout << "current \"open file\" operation is failed" << std::endl;
     }
     allWords[i] = wordsFromCurrentFile;
     wordsFromCurrentFile.clear();
   }
-  
+
+  for (auto it = allWords.begin(); it != allWords.end(); it++) {
+    std::cout << it->first << " file:" << std::endl;
+    for (auto i = 0; i < it->second.size(); i++) {
+      std::cout << it->second[i] << " ";
+    }
+    std::cout << std::endl;
+  }
+
   if (configFile.is_open())
     return false;
   return true;
 }
 
-void printAllWords() {
-  for (auto el : allWords) {
-    for (auto el2 : el) {
-      std::cout << el2 << " ";
+void ConvertJSON::CheckWordsInDoc(std::map<int,std::vector<std::string>>::iterator it) {
+  Entry entry;
+  entry.first = it->first, entry.second;
+
+  for (int i = 0; i < it->second.size(); i++) {
+    entry.second = 0;
+    for (int j = i + 1; j < it->second.size(); j++) {
+      if (it->second[j] == it->second[i]) {
+	entry.second++;
+	it->second.erase(it->second.begin() + j);// delete current word
+	j--;
+      }
     }
-    std::endl;
+    uniqueWords[it->second[i]].push_back(entry);
   }
+}
+
+bool ConvertJSON::ToUnique() {
+  for (auto it = allWords.begin(); it != allWords.end(); it++) { // docs   
+    CheckWordsInDoc(it);
+  }
+
+  for (auto it = uniqueWords.begin(); it != uniqueWords.end(); it++) {
+    std::cout << it->first << ":" << it->second[0].first << ","
+	      << it->second[0].second << std::endl;
+  }
+  
+  Entry newEntry;
+  for (auto it = uniqueWords.begin(); it != uniqueWords.end(); it++) {
+    auto it2 = it;
+    it2++;
+    for (; it2 != uniqueWords.end(); it2++) {
+      if (it->first == it2->first) {
+	newEntry.first = it2->second[0].first;
+	newEntry.second = it2->second[0].second;
+	it->second.push_back(newEntry);
+	uniqueWords.erase(it2);
+	it2--;
+      }
+    }
+  }
+
+  for (auto it = uniqueWords.begin(); it != uniqueWords.end(); it++) {
+    std::cout << it->first << std::endl;
+    for (auto i = 0; i < it->second.size(); i++) {
+      std::cout << it->second[i].first << " " << it->second[i].second << std::endl;
+    }
+    std::cout << std::endl;
+  }
+
+  return true;
 }
 
 bool ConvertJSON::GetResponsesLimit() {
@@ -79,7 +101,7 @@ bool ConvertJSON::GetResponsesLimit() {
   json config = json::parse(file);
   file.close();
   responsesLimit = config["config"]["max_responses"];
-  
+
   if (file.is_open())
     return false;
   return true;
@@ -92,12 +114,48 @@ bool ConvertJSON::GetRequests() {
   int totalRequests = requestsJSON["requests"].size();
   for (auto i = 0; i < totalRequests; i++)
     requests.push_back(requestsJSON["requests"][i]);
-  
+
   if (file.is_open())
     return false;
   return true;
 }
 
 bool ConvertJSON::PutAnswers() {
+  json answers, jsonPair, relevance;
+
+  bool result;
+  for (auto i = 0; i < requests.size(); i++) {
+    std::string currentRequest = "request" + std::to_string(i);
+    result = false;
+    for (auto it = uniqueWords.begin(); it != uniqueWords.end(); it++) {
+      if (requests[i] == it->first) {
+	if (!responsesLimit) {
+	  return true;
+	}
+	else {
+	  answers["answers"][currentRequest]["result"] = true;
+	  if (it->second.size() > 1) {
+	    for (int j = 0; j < it->second.size(); j++) {
+	      jsonPair["docid"] = it->second[j].first;
+	      jsonPair["rank"] = it->second[j].second;
+	      relevance.push_back(jsonPair);
+	    }
+	    answers["answers"][currentRequest]["relevance"] = relevance;
+	    relevance.clear();
+	  } else {
+	    answers["answers"][currentRequest]["docid"] = it->second[0].first;
+	    answers["answers"][currentRequest]["entry"] = it->second[0].second;
+	  }
+	}
+	result = true;
+	break;
+      }
+    }
+    if (!result)
+      answers["answers"][currentRequest]["result"] = false;
+  }
+  std::ofstream answersFile("answers.json");
+  answersFile << answers;
+  answersFile.close();
   return true;
 }

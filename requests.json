@@ -2,6 +2,9 @@
 "requests": [
     "pasta",
     "cat",
+    "if",
+    "else",
+    "alpha",
     "back"
 ]
 }

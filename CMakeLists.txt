@@ -7,7 +7,7 @@ FetchContent_Declare(json
         )
 FetchContent_MakeAvailable(json)
 set(JSON_BuildTests OFF CACHE INTERNAL "")
-add_executable(search-engine search-engine.cpp)
+add_executable(search-engine search-engine.cxx)
 target_link_libraries(search-engine nlohmann_json::nlohmann_json)
 Include(FetchContent)
 FetchContent_Declare(
@@ -16,6 +16,6 @@ FetchContent_Declare(
   GIT_TAG        v3.0.1 # or a later release
 )
 FetchContent_MakeAvailable(Catch2)
-add_executable(tests test.cpp)
+add_executable(tests test.cxx)
 target_link_libraries(tests Catch2::Catch2WithMain
 			    nlohmann_json::nlohmann_json)

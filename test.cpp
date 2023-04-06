@@ -1,5 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
-#include "ConvertJSON.cxx"
+#include "ConvertJSON.cpp"
 
 TEST_CASE("Factorials are computed", "[factorial]") {
   ConvertJSON testObject;

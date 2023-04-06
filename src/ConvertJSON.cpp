@@ -29,7 +29,7 @@ bool ConvertJSON::GetTextDocuments() { // start
     allWords[i] = wordsFromCurrentFile;
     wordsFromCurrentFile.clear();
   }
-
+  
   if (configFile.is_open())
     return false;
   return true;

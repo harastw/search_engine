@@ -1,4 +1,4 @@
-# Install script for directory: /home/sark/code/cxx/search_engine/nlohmann_json
+# Install script for directory: /home/sark/code/cxx/clear_c++/nlohmann_json
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

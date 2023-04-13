@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sark/code/cxx/search_engine
+CMAKE_SOURCE_DIR = /home/sark/code/cxx/clear_c++
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sark/code/cxx/search_engine
+CMAKE_BINARY_DIR = /home/sark/code/cxx/clear_c++
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/sark/code/cxx/search_engine && $(CMAKE_COMMAND) -E cmake_progress_start /home/sark/code/cxx/search_engine/CMakeFiles /home/sark/code/cxx/search_engine/nlohmann_json//CMakeFiles/progress.marks
-	cd /home/sark/code/cxx/search_engine && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nlohmann_json/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sark/code/cxx/search_engine/CMakeFiles 0
+	cd /home/sark/code/cxx/clear_c++ && $(CMAKE_COMMAND) -E cmake_progress_start /home/sark/code/cxx/clear_c++/CMakeFiles /home/sark/code/cxx/clear_c++/nlohmann_json//CMakeFiles/progress.marks
+	cd /home/sark/code/cxx/clear_c++ && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nlohmann_json/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sark/code/cxx/clear_c++/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/sark/code/cxx/search_engine && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nlohmann_json/clean
+	cd /home/sark/code/cxx/clear_c++ && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nlohmann_json/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,17 +158,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/sark/code/cxx/search_engine && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nlohmann_json/preinstall
+	cd /home/sark/code/cxx/clear_c++ && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nlohmann_json/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/sark/code/cxx/search_engine && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nlohmann_json/preinstall
+	cd /home/sark/code/cxx/clear_c++ && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nlohmann_json/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/sark/code/cxx/search_engine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/sark/code/cxx/clear_c++ && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -195,6 +195,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/sark/code/cxx/search_engine && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/sark/code/cxx/clear_c++ && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,0 +1,10 @@
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+bin/
+CTestTestfile.cmake
+lib/
+Makefile
+README.md
+Google_tests/lib
+Google_tests/CMakeFiles

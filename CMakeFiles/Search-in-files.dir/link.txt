@@ -1,0 +1,1 @@
+/usr/bin/c++ -static "CMakeFiles/Search-in-files.dir/main.cpp.o" "CMakeFiles/Search-in-files.dir/src/ConverterJSON.cpp.o" "CMakeFiles/Search-in-files.dir/src/InvertedIndex.cpp.o" "CMakeFiles/Search-in-files.dir/src/SearchServer.cpp.o" -o bin/Search-in-files  -static 

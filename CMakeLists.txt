@@ -1,22 +1,60 @@
-cmake_minimum_required(VERSION 3.8)
-project(search-engine)
-include(FetchContent)
-FetchContent_Declare(json
-        GIT_REPOSITORY https://github.com/nlohmann/json
-        GIT_TAG v3.10.5
+cmake_minimum_required(VERSION 3.22)
+project(Search-in-files)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_EXE_LINKER_FLAGS "-static")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
+
+add_subdirectory(nlohmann_json)
+
+add_executable(
+        ${PROJECT_NAME}
+        main.cpp
+        src/ConverterJSON.cpp
+        src/InvertedIndex.cpp
+        src/SearchServer.cpp
         )
-FetchContent_MakeAvailable(json)
-set(JSON_BuildTests OFF CACHE INTERNAL "")
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
-add_executable(search-engine src/search-engine.cpp)
-target_link_libraries(search-engine nlohmann_json::nlohmann_json)
-Include(FetchContent)
-FetchContent_Declare(
-  Catch2
-  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG        v3.0.1 # or a later release
+
+include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json ${CMAKE_EXE_LINKER_FLAGS})
+
+# Copy auxiliary files to binary folder: ==========================================================
+add_custom_command(
+        TARGET ${PROJECT_NAME}  POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/config.json
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config.json)
+add_custom_command(
+        TARGET ${PROJECT_NAME}  POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/requests.json
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/requests.json)
+add_custom_command(
+        TARGET ${PROJECT_NAME}  POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/answers.json
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/answers.json)
+add_custom_command(TARGET ${PROJECT_NAME}  POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
+
+# Tests: =======================================================================================
+project(Google_tests)
+enable_testing()
+include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+add_subdirectory(${PROJECT_NAME}/lib)
+add_executable(
+        ${PROJECT_NAME}
+        Google_tests/InverterIndexTest.cpp
+        Google_tests/SearchServerTest.cpp
+        src/InvertedIndex.cpp
+        src/SearchServer.cpp
 )
-FetchContent_MakeAvailable(Catch2)
-add_executable(tests src/test.cpp)
-target_link_libraries(tests Catch2::Catch2WithMain
-			    nlohmann_json::nlohmann_json)
+set_target_properties(${PROJECT_NAME} PROPERTIES
+        CXX_STANDARD 14
+        CXX_STANDARD_REQUIRED ON
+        )
+target_link_libraries(${PROJECT_NAME} gtest gtest_main)

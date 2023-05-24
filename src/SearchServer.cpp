@@ -65,8 +65,8 @@ SearchServer::get_res_for_one_request(std::map<std::string,std::vector<Entry>>::
 
 std::vector<res_for_one_request>
 SearchServer::search(std::vector<std::string> requests,
-		     InvertedIndex inverted_index,
-		     int responses_limit)
+                     InvertedIndex inverted_index,
+                     int responses_limit)
 {
   std::map<std::string,size_t> sort_requests = to_unique(requests);
   sort_requests = to_sort_unique_requests(sort_requests);

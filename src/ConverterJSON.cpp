@@ -1,4 +1,4 @@
-#include "SearchServer.hpp"
+#include <SearchServer.hpp>
 #include <ConverterJSON.hpp>
 #include <Help.hpp>
 #include <mutex>
@@ -81,10 +81,7 @@ void ConverterJSON::put_answers(std::vector<res_for_one_request> res)
   {
     std::string current_request = "request" + std::to_string(i);
     if (res[i].size() == 1 && res[i][0].rank == -1)
-    {
       answer_on_request[current_request]["result"] = false;
-      
-    }
     else if (res[i].size() == 1)
     {
       answer_on_request[current_request]["result"] = true;

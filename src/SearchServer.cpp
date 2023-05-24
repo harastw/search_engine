@@ -39,8 +39,8 @@ SearchServer::to_sort_unique_requests(std::map<std::string,size_t>& unique_reque
     auto it_on_minimum = it;
     for (auto it2 = it; it2 != unique_requests.end(); it2++)
       if (it2->second < it_on_minimum->second)
-	it_on_minimum = it2;
-    sort_unique_requests[it_on_minimum->first] = it_on_minimum->second;
+        it_on_minimum = it2;
+      sort_unique_requests[it_on_minimum->first] = it_on_minimum->second;
   }
   return unique_requests;
 }

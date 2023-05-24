@@ -23,7 +23,7 @@ SearchServer::to_unique(std::vector<std::string> requests)
     int n = 1;
     for (auto j = i + 1; j < requests_size; j++)
       if (requests[i] == requests[j])
-	n++;
+        n++;
     unique_requests[requests[i]] = n;
   }
   return unique_requests;

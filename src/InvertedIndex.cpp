@@ -38,19 +38,17 @@ void InvertedIndex::update_document_base(std::vector<std::string> input_docs)
 
       for (auto k = i + 1; k < unique_words_size; k++)
       {
-	auto current_words2 = unique_words_v[k];
-	count_current_word = 0;
-	for (auto l = current_words2.begin(); l != current_words2.end(); l++)
-	{
-	  auto currentWord2 = l->first;
-	  if (current_word == currentWord2)
-	  {
-	    count_current_word++;
-	  }
-	}
-	new_entry.doc_id = k;
-	new_entry.count = count_current_word;
-	freq_dictionary[current_word].push_back(new_entry);
+        auto current_words2 = unique_words_v[k];
+        count_current_word = 0;
+        for (auto l = current_words2.begin(); l != current_words2.end(); l++)
+        {
+          auto currentWord2 = l->first;
+          if (current_word == currentWord2)
+          count_current_word++;
+        }
+        new_entry.doc_id = k;
+        new_entry.count = count_current_word;
+        freq_dictionary[current_word].push_back(new_entry);
       }
       new_entry_v.clear();
     }

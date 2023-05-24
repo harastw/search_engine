@@ -1,7 +1,7 @@
 #include <InvertedIndex.hpp>
 
 void update_in_thread(std::string s,
-		    std::map<std::string,size_t>& uniqueWords)
+		      std::map<std::string,size_t>& uniqueWords)
 {
   Help help;
   std::vector<std::string> words = help.to_words(s);
@@ -57,7 +57,4 @@ void InvertedIndex::update_document_base(std::vector<std::string> input_docs)
   }
 }
 
-std::map<std::string,std::vector<Entry>> InvertedIndex::get_dict()
-{
-  return freq_dictionary;
-}
+std::map<std::string,std::vector<Entry>> InvertedIndex::get_dict() { return freq_dictionary; }

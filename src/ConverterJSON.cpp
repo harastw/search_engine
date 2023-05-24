@@ -93,10 +93,10 @@ void ConverterJSON::put_answers(std::vector<res_for_one_request> res)
       answer_on_request[current_request]["result"] = true;
       for (auto j = 0; j < (int)res[i].size(); j++)
       {
-	el_of_answer["docid"] = res[i][j].doc_id;
-	el_of_answer["rank"] = res[i][j].rank;
-	answer_on_request[current_request]["relevance"].push_back(el_of_answer);
-	el_of_answer.clear();
+        el_of_answer["docid"] = res[i][j].doc_id;
+        el_of_answer["rank"] = res[i][j].rank;
+        answer_on_request[current_request]["relevance"].push_back(el_of_answer);
+        el_of_answer.clear();
       }
     }
     answers["answers"].push_back(answer_on_request);

@@ -36,7 +36,7 @@ std::vector<std::string> ConverterJSON::get_text_documents()
   adapters.resize(total_files);
   for (auto i = 0; i < total_files; i++)
     threads[i] = std::thread(oneFile, i, config,
-			     std::ref(adapters[i]));
+                 std::ref(adapters[i]));
   for (int i = 0; i < total_files; i++)
   {
     threads[i].join();

@@ -3,7 +3,7 @@
 void SearchServer::print_ri(RelativeIndex ri)
 {
   std::cout << "ri.doc_id = " << ri.doc_id << "\t"
-	    << "ri.rank = " << ri.rank << std::endl;
+            << "ri.rank = " << ri.rank << std::endl;
 }
 
 void SearchServer::print_res_for_one_request(res_for_one_request res)

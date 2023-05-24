@@ -47,8 +47,8 @@ SearchServer::to_sort_unique_requests(std::map<std::string,size_t>& unique_reque
 
 res_for_one_request
 SearchServer::get_res_for_one_request(std::map<std::string,std::vector<Entry>>::iterator it_dict,
-				      int responses_limit,
-				      int total_this_request)
+                                      int responses_limit,
+                                      int total_this_request)
 {
   res_for_one_request one_res;
   RelativeIndex new_relative_index;

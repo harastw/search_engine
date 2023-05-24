@@ -83,10 +83,10 @@ SearchServer::search(std::vector<std::string> requests,
     {
       if (it_request->first == it_dict->first)
       {
-	new_res = get_res_for_one_request(it_dict,
-					  responses_limit,
-					  total_this_request);
-	is_found = true;
+        new_res = get_res_for_one_request(it_dict,
+                                          responses_limit,
+                                          total_this_request);
+        is_found = true;
       }
     }
     if (!is_found)

@@ -35,6 +35,6 @@ int main()
       "нет доступа на запись" << std::endl; }
 
   std::cout << "программа успешно отработала"
-	    << std::endl;
+            << std::endl;
   return 0;
 }

@@ -32,14 +32,14 @@ struct Help
       totalWord = 1;
       for (auto j = i; j < vs_size; j++)
       {
-	if (vs[i] == vs[j])
-	{
-	  auto it = vs.begin();
-	  std::advance(it,j);
-	  vs.erase(it);
-	  vs_size--, j--;
-	  totalWord++;
-	}
+        if (vs[i] == vs[j])
+        {
+          auto it = vs.begin();
+          std::advance(it,j);
+          vs.erase(it);
+          vs_size--, j--;
+          totalWord++;
+        }
       }
       unique_words[vs[i]] = totalWord;
     }

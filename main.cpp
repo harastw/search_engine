@@ -27,6 +27,7 @@ int main()
   catch(const std::exception& ex2)
   {
     std::cout << "нет доступа к лимиту ответов" << std::endl;
+    return 1;
   }
   try
   {
@@ -35,6 +36,7 @@ int main()
   catch(const std::exception& ex3)
   {
     std::cout << "нет доступа к запросам" << std::endl;
+    return 1;
   }
   inverted_index.update_document_base(texts);
   auto res = search_server.search(requests, inverted_index,
@@ -46,6 +48,7 @@ int main()
   catch(const std::exception& ex4)
   {
     std::cout << "нет доступа на запись" << std::endl;
+    return 1;
   }
 
   std::cout << "программа успешно отработала"

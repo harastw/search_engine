@@ -19,7 +19,7 @@ void one_file(int i, json config, std::string& target)
   file.close();
 }
 
-const std::vector<std::string> ConverterJSON::get_text_documents()
+std::vector<std::string> ConverterJSON::get_text_documents() const
 {
   std::vector<std::string> docs;
   std::ifstream config_file;
@@ -45,7 +45,7 @@ const std::vector<std::string> ConverterJSON::get_text_documents()
   return docs;
 }
 
-const int ConverterJSON::get_responses_limit()
+int ConverterJSON::get_responses_limit() const
 {
   std::ifstream file;
   file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
@@ -55,7 +55,7 @@ const int ConverterJSON::get_responses_limit()
   return config["config"]["max_responses"];
 }
 
-const std::vector<std::string> ConverterJSON::get_requests()
+std::vector<std::string> ConverterJSON::get_requests() const
 {
   std::vector<std::string> requests;
   std::ifstream file;
@@ -74,7 +74,7 @@ const std::vector<std::string> ConverterJSON::get_requests()
   return requests;
 }
 
-const void ConverterJSON::put_answers(std::vector<res_for_one_request> res)
+void ConverterJSON::put_answers(std::vector<res_for_one_request> res) const
 {
   json answers, answer_on_request, el_of_answer;
   for (auto i = 0; i < (int)res.size(); i++)

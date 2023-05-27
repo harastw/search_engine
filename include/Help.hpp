@@ -12,8 +12,8 @@
 
 struct Help
 {    
-  const std::vector<std::string>
-  to_words(const std::string& s)
+  std::vector<std::string>
+  to_words(const std::string& s) const
   {
     std::stringstream ss(s);
     std::istream_iterator<std::string> begin(ss);
@@ -22,8 +22,8 @@ struct Help
     return tokens;
   }
 
-  const std::map<std::string,size_t>
-  into_unique(const std::vector<std::string>& vs)
+  std::map<std::string,size_t>
+  into_unique(const std::vector<std::string>& vs) const
   {
     std::map<std::string,size_t> unique_words;
     size_t totalWord;

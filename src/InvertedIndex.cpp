@@ -56,7 +56,7 @@ InvertedIndex::update_document_base(const std::vector<std::string>& input_docs)
   }
 }
 
-const std::map<std::string,std::vector<Entry>> InvertedIndex::get_dict()
+std::map<std::string,std::vector<Entry>> InvertedIndex::get_dict() const
 {
   return freq_dictionary;
 }

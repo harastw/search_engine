@@ -15,7 +15,7 @@ class InvertedIndex
 {
  public:
   void update_document_base(const std::vector<std::string>& input_docs);
-  const std::map<std::string,std::vector<Entry>> get_dict();
+  std::map<std::string,std::vector<Entry>> get_dict() const;
  private:
   std::map<std::string,std::vector<Entry>> freq_dictionary;
 };

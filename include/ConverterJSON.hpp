@@ -5,8 +5,7 @@
 
 using json = nlohmann::json;
 
-class ConverterJSON {
-public:
+struct ConverterJSON {
   const std::vector<std::string> get_text_documents();
   const int get_responses_limit();
   const std::vector<std::string> get_requests();

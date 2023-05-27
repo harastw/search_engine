@@ -45,7 +45,7 @@ InvertedIndex::update_document_base(const std::vector<std::string>& input_docs)
         {
           auto currentWord2 = l->first;
           if (current_word == currentWord2)
-          count_current_word++;
+            count_current_word++;
         }
         new_entry.doc_id = k;
         new_entry.count = count_current_word;

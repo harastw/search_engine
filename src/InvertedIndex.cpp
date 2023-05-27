@@ -6,9 +6,10 @@ void update_in_thread(std::string s,
   Help help;
   std::vector<std::string> words = help.to_words(s);
   uniqueWords = help.into_unique(words);
-}
+} 
 
-void InvertedIndex::update_document_base(std::vector<std::string> input_docs)
+void
+InvertedIndex::update_document_base(const std::vector<std::string>& input_docs)
 {
   std::vector<std::map<std::string,size_t>> unique_words_v;
   unique_words_v.resize(input_docs.size());
@@ -16,8 +17,8 @@ void InvertedIndex::update_document_base(std::vector<std::string> input_docs)
   threads.resize(input_docs.size());
   int threads_size = threads.size();
   for (auto i = 0; i < threads_size; i++)
-    threads[i] = std::thread(update_in_thread, input_docs[i],
-                 std::ref(unique_words_v[i]));
+  threads[i] = std::thread(update_in_thread, input_docs[i],
+               std::ref(unique_words_v[i]));
   for (auto i = 0; i < threads_size; i++)
     threads[i].join();
 
@@ -55,4 +56,7 @@ void InvertedIndex::update_document_base(std::vector<std::string> input_docs)
   }
 }
 
-std::map<std::string,std::vector<Entry>> InvertedIndex::get_dict() { return freq_dictionary; }
+const std::map<std::string,std::vector<Entry>> InvertedIndex::get_dict()
+{
+  return freq_dictionary;
+}

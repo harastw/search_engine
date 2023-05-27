@@ -7,7 +7,7 @@ using json = nlohmann::json;
 
 std::mutex m;
 
-void oneFile(int i, json config, std::string &target)
+void one_file(int i, json config, std::string& target)
 {
   std::string fileName = config["files"][i];
   std::ifstream file(fileName);
@@ -19,7 +19,7 @@ void oneFile(int i, json config, std::string &target)
   file.close();
 }
 
-std::vector<std::string> ConverterJSON::get_text_documents()
+const std::vector<std::string> ConverterJSON::get_text_documents()
 {
   std::vector<std::string> docs;
   std::ifstream config_file;
@@ -35,7 +35,7 @@ std::vector<std::string> ConverterJSON::get_text_documents()
   std::vector<std::string> adapters;
   adapters.resize(total_files);
   for (auto i = 0; i < total_files; i++)
-    threads[i] = std::thread(oneFile, i, config,
+    threads[i] = std::thread(one_file, i, config,
                  std::ref(adapters[i]));
   for (int i = 0; i < total_files; i++)
   {
@@ -45,7 +45,7 @@ std::vector<std::string> ConverterJSON::get_text_documents()
   return docs;
 }
 
-int ConverterJSON::get_responses_limit()
+const int ConverterJSON::get_responses_limit()
 {
   std::ifstream file;
   file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
@@ -55,7 +55,7 @@ int ConverterJSON::get_responses_limit()
   return config["config"]["max_responses"];
 }
 
-std::vector<std::string> ConverterJSON::get_requests()
+const std::vector<std::string> ConverterJSON::get_requests()
 {
   std::vector<std::string> requests;
   std::ifstream file;
@@ -74,7 +74,7 @@ std::vector<std::string> ConverterJSON::get_requests()
   return requests;
 }
 
-void ConverterJSON::put_answers(std::vector<res_for_one_request> res)
+const void ConverterJSON::put_answers(std::vector<res_for_one_request> res)
 {
   json answers, answer_on_request, el_of_answer;
   for (auto i = 0; i < (int)res.size(); i++)

@@ -1,19 +1,19 @@
 #include <SearchServer.hpp>
 
-void SearchServer::print_ri(RelativeIndex ri)
+const void SearchServer::print_ri(RelativeIndex ri)
 {
   std::cout << "ri.doc_id = " << ri.doc_id << "\t"
             << "ri.rank = " << ri.rank << std::endl;
 }
 
-void SearchServer::print_res_for_one_request(res_for_one_request res)
+const void SearchServer::print_res_for_one_request(res_for_one_request res)
 {
   for (auto i = 0; i < (int)res.size(); i++)
     print_ri(res[i]);
   std::cout << std::endl;
 }
 
-std::map<std::string,size_t>
+const std::map<std::string,size_t>
 SearchServer::to_unique(std::vector<std::string> requests)
 {
   std::map<std::string,size_t> unique_requests;
@@ -30,7 +30,7 @@ SearchServer::to_unique(std::vector<std::string> requests)
 }
     
 
-std::map<std::string,size_t>
+const std::map<std::string,size_t>
 SearchServer::to_sort_unique_requests(std::map<std::string,size_t>& unique_requests)
 {
   std::map<std::string,size_t> sort_unique_requests;
@@ -38,14 +38,16 @@ SearchServer::to_sort_unique_requests(std::map<std::string,size_t>& unique_reque
   {
     auto it_on_minimum = it;
     for (auto it2 = it; it2 != unique_requests.end(); it2++)
+    {
       if (it2->second < it_on_minimum->second)
         it_on_minimum = it2;
+    }
       sort_unique_requests[it_on_minimum->first] = it_on_minimum->second;
   }
   return unique_requests;
 }
 
-res_for_one_request
+const res_for_one_request
 SearchServer::get_res_for_one_request(std::map<std::string,std::vector<Entry>>::iterator it_dict,
                                       int responses_limit,
                                       int total_this_request)
@@ -63,11 +65,12 @@ SearchServer::get_res_for_one_request(std::map<std::string,std::vector<Entry>>::
   return one_res;
 }
 
-std::vector<res_for_one_request>
+const std::vector<res_for_one_request>
 SearchServer::search(std::vector<std::string> requests,
                      InvertedIndex inverted_index,
                      int responses_limit)
 {
+  std::vector<res_for_one_request> res;
   std::map<std::string,size_t> sort_requests = to_unique(requests);
   sort_requests = to_sort_unique_requests(sort_requests);
   std::map<std::string,std::vector<Entry>> dict = inverted_index.get_dict();

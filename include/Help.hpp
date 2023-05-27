@@ -32,8 +32,8 @@ struct Help
     {
       totalWord = 1;
       for (auto j = i; j < vs_size; j++)
-	if (vs[i] == vs[j])
-	  totalWord++;
+        if (vs[i] == vs[j])
+          totalWord++;
       unique_words[vs[i]] = totalWord;
     }
     return unique_words;

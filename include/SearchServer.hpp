@@ -26,9 +26,9 @@ struct SearchServer
   const void print_ri(RelativeIndex ri);
   const void print_res_for_one_request(res_for_one_request res);
   const res_for_one_request get_res_for_one_request(std::map<std::string,std::vector<Entry>>::iterator it_dict,
-					            int responses_limit,
-					            int total_this_request);
+                                                    int responses_limit,
+                                                    int total_this_request);
   const std::vector<res_for_one_request> search(std::vector<std::string> requests,
-					        InvertedIndex inverted_index,
-					        int responses_limit);
+                                                InvertedIndex inverted_index,
+                                                int responses_limit);
 };

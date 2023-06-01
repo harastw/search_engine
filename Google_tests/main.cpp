@@ -69,7 +69,7 @@ TEST(test_inverted_index, start) // проверка порядка в freq_dict
   ASSERT_TRUE(test);
 }
 
-TEST(test_search, start)
+TEST(test_search, start) // базовая проверка результатов поиска
 {
   bool test;
   std::vector<std::string> requests;
@@ -77,7 +77,7 @@ TEST(test_search, start)
   requests.push_back("milk");
   std::vector<res_for_one_request> res = search_server.search(requests,
                                                               inverted_index,
-							      responses_limit);
+                                                              responses_limit);
   if (res[0][0].rank == -1 && res[1][0].rank != -1)
     test = true;
   else

@@ -3,8 +3,6 @@
 #include <InvertedIndex.hpp>
 #include <SearchServer.hpp>
 #include <ConverterJSON.hpp>
-#include <string>
-#include <vector>
 
 ConverterJSON converter;
 InvertedIndex inverted_index;

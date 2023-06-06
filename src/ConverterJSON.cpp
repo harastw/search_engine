@@ -24,7 +24,7 @@ std::vector<std::string> ConverterJSON::get_text_documents() const
   std::vector<std::string> docs;
   std::ifstream config_file;
   config_file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
-  config_file.open("config.json");
+  config_file.open("../config.json");
   if (!config_file.is_open())
     std::cout << "config file does not open!\n";
   json config = json::parse(config_file); // to json
@@ -49,7 +49,7 @@ int ConverterJSON::get_responses_limit() const
 {
   std::ifstream file;
   file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
-  file.open("config.json");
+  file.open("../config.json");
   json config = json::parse(file);
   file.close();
   return config["config"]["max_responses"];
@@ -60,7 +60,7 @@ std::vector<std::string> ConverterJSON::get_requests() const
   std::vector<std::string> requests;
   std::ifstream file;
   file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
-  file.open("requests.json");
+  file.open("../requests.json");
   json requestsJSON = json::parse(file);
   file.close();
   int total_requests = requestsJSON["requests"].size();
@@ -102,7 +102,7 @@ void ConverterJSON::put_answers(std::vector<res_for_one_request> res) const
     answers["answers"].push_back(answer_on_request);
     answer_on_request.clear();
   }
-  std::ofstream answers_file("answers.json");
+  std::ofstream answers_file("../answers.json");
   answers_file << answers;
   answers_file.close();
 }
